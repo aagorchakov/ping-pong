@@ -1,0 +1,50 @@
+<html>
+    <head>
+        <title>Ping Pong</title>
+
+        <style>
+            body {
+                background-color: lightslategrey;
+            }
+            #field {
+                overflow: hidden;
+                width: 1000px;
+                height: 700px;
+                background-color: black;
+            }
+            #ball {
+                position: absolute;
+                border-radius: 50%;
+                width: 70px;
+                height: 70px;
+                background-color: orange;
+                display: none;
+            }
+            .player {
+                position: absolute;
+                border-radius: 50%;
+                width: 100px;
+                height: 100px;
+            }
+            #player1 {
+                background-color: lime;
+            }
+            #player2 {
+                background-color: cornflowerblue;
+                display: none;
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <div id="field">
+            <div class="player" id="player1"></div>
+            <div class="player" id="player2"></div>
+            <div id="ball"></div>
+        </div>
+
+        <script src="main.js"></script>
+
+    </body>
+</html>
