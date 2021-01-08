@@ -1,28 +1,32 @@
-const players = [ document.getElementById('player1'), document.getElementById('player2') ];
+const players = [
+	document.getElementById('player1'),
+	document.getElementById('player2')
+];
 const ball = document.getElementById('ball');
 
-const ws = new WebSocket('ws://' + location.host + '/ws');
+const protocol = location.protocol === 'https:' ? 'wss' : 'ws';
+const websocket = new WebSocket(protocol + '://' + location.host + '/ws');
 
 let connected = false;
 let waitingResponse = false;
 let playersOnline = 1;
 
-ws.onopen = event => {
+websocket.onopen = event => {
 	connected = true;
 	document.title = 'Connected';
 }
 
-ws.onerror = event => {
+websocket.onerror = event => {
 	alert('Error');
 	console.log(event);
 }
 
-ws.onclose = event => {
+websocket.onclose = event => {
 	connected = false;
 	document.title = 'Disconnected';
 }
 
-ws.onmessage = data => {
+websocket.onmessage = data => {
 	waitingResponse = false;
 	const response = JSON.parse(data.data);
 	playersOnline = response.players.length;
@@ -42,6 +46,6 @@ ws.onmessage = data => {
 window.onmousemove = event => {
 	if (connected && !waitingResponse) {
 		waitingResponse = true;
-		ws.send(event.pageY);
+		websocket.send(event.pageY);
 	}
 }
