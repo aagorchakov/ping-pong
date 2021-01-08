@@ -31,7 +31,7 @@ public class Game {
     }
 
     public void moveBall() {
-        Ball ball = getBall();
+        // Bouncing off the walls
         if (ball.getX() <= 0) {
             players.get(1).incrementScore();
             ball.setSpeedX(Math.abs(ball.getSpeedX()));
@@ -45,12 +45,22 @@ public class Game {
             ball.setSpeedY(Math.abs(ball.getSpeedY()) * -1);
         }
 
+        // Hit the ball by players
+        boolean leftPlayer = true;
         for (Player player : players) {
             if (ball.isOver(player)) {
                 ball.hitPlayer();
+                // Move the ball from the player to avoid hitting multiple times
+                if (leftPlayer) {
+                    ball.setX(player.getX2());
+                } else {
+                    ball.setX(player.getX() - Ball.SIZE);
+                }
             }
+            leftPlayer = false;
         }
 
+        // Move ball
         ball.incrementX(ball.getSpeedX());
         ball.incrementY(ball.getSpeedY());
     }
